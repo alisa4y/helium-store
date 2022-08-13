@@ -1,0 +1,97 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(http-equiv="X-UA-Compatible" content="IE=edge")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    title فروشگاه هلیوم
+    link(rel="stylesheet", href="./index.css")
+  body
+    header
+      .icon.menu
+        include ../assets/icons/menu.svg
+        .menu-list
+          ul.links
+            li: a(herf="#") سفارش های من
+            li: a(herf="#") صفحه اصلی
+            li: a(herf="#") اخبار 
+            li: a(herf="#") قوانین و مقررات
+            li: a(herf="#") درباره ما 
+            li: a(herf="#") سوالات متداول
+      h1 فروشگاه هلیوم
+      .icon.avatar: include ../assets/icons/avatar.svg
+      .icon.basket(data-view="countCard")
+        include ../assets/icons/basket.svg
+        .badge(data-key="count") 0
+      .icon.back: include ../assets/icons/back.svg
+    mixin card(name="کارت", price="1000")
+      .card
+        .img
+          .subtitle
+            span(data-key="name")= name
+            span 
+              span(data-key="price")= price
+              |    تومان
+        button سفارش
+    - var cardsInfo = require("../../data.json").cards
+    mixin selectCard(value)
+      select(data-key="name", value=value)
+        - for (var i = 0; i < cardsInfo.length; i++)
+          option(value=cardsInfo[i].name)= cardsInfo[i].name
+    template#order
+      .fl
+        .label کارت:
+        +selectCard
+        .label تعداد:
+        input(type="number", value="1", data-key="count")
+        .label قیمت:
+        span.ul(data-key="price")= "1000"
+    main
+      .card-list.open
+        - for (var i = 0; i < cardsInfo.length; i++)
+          +card(cardsInfo[i].name, cardsInfo[i].price)
+      .layout.open
+        h2 سفارش ها
+        div#orders(data-item="order" )
+        .ce
+          button خرید
+      .layout.open
+        h2 شماره همراه خود را وارد کنید
+        .phone-info.fl
+          .label شماره همراه:
+          input(type="number", value="09123456789", data-key="phoneNumber")
+        .ce
+          button ثبت
+      .layout.open
+        h2 دریافت کد
+        .fl
+          .label کد:
+          input(type="number", name="")
+          input(type="number", name="")
+          input(type="number", name="")
+          input(type="number", name="")
+          input(type="number", name="")
+        .ce
+          button تایید
+      .layout.open
+        h2 سفارش های انجام شده
+        .orders-list
+          .cell کارت 
+          .cell تعداد
+          .cell قیمت
+          .cell تاریخ
+          .cell طلایی 
+          .cell 2
+          .cell 20000000
+          .cell 1401/2/7
+
+    footer
+      ul.links
+        li: a(herf="#") صفحه اصلی
+        li: a(herf="#") اخبار 
+        li: a(herf="#") قوانین و مقررات
+        li: a(herf="#") درباره ما 
+        li: a(herf="#") سوالات متداول
+      .logo
+        img(src="/assets/icons/logo.png")
+    script(src="./script.js")

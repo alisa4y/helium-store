@@ -1,0 +1,224 @@
+:root {
+  --icon-width: 1.4em;
+  --bg: hsl(0deg 0% 48% / 54%);
+  --input-border: #0c82f0;
+}
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  transition: all 0.3s ease-in-out;
+}
+.orders-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  justify-items: stretch;
+}
+.orders-list > .cell {
+  text-align: center;
+  padding: 0.5em;
+}
+.orders-list > .cell:nth-child(8n + 1),
+.orders-list > .cell:nth-child(8n + 2),
+.orders-list > .cell:nth-child(8n + 3),
+.orders-list > .cell:nth-child(8n + 4) {
+  background: rgba(255, 255, 255, 0.53);
+}
+.orders-list > .cell:nth-child(8n + 5),
+.orders-list > .cell:nth-child(8n + 6),
+.orders-list > .cell:nth-child(8n + 7),
+.orders-list > .cell:nth-child(8n + 8) {
+  background: rgba(255, 255, 255, 0.26);
+}
+.phone-info > input {
+  width: 200px !important;
+  text-align: center;
+}
+.fl {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+main > * {
+  transform: scale(0);
+  height: 0px;
+}
+.layout {
+  margin: 1em;
+  padding: 1em;
+  background: rgba(255, 255, 255, 0.57);
+}
+.phone-confirm input {
+  text-align: center;
+}
+.layout > h2 {
+  padding-bottom: 1em;
+}
+main > *.open {
+  transform: scale(1);
+  height: initial;
+}
+.ul,
+input[type="number"],
+input[type="number"]:focus,
+select {
+  border: 0;
+  outline: 0;
+  background: transparent;
+  border-bottom: 1px solid var(--input-border);
+}
+select {
+  min-width: 100px;
+}
+input[type="number"] {
+  min-width: 50px !important;
+  width: 50px;
+}
+.card-price > span {
+  min-width: fit-content;
+}
+button {
+  border: 0;
+}
+.menu-list {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  transform: translate(100%, 100%);
+  padding: 2em;
+  background: var(--bg);
+  color: white;
+  width: 50%;
+  backdrop-filter: blur(2px);
+  z-index: 10;
+}
+.menu-list ul {
+  display: flex;
+  flex-flow: column;
+  gap: 1em;
+}
+.card-list {
+  display: grid;
+  gap: 2em;
+  justify-items: center;
+  margin-top: 2em;
+}
+.card {
+  width: 80%;
+  display: flex;
+  flex-flow: column;
+  gap: 24px;
+  align-items: center;
+}
+button {
+  width: 109px;
+  height: 40px;
+  background: #00ffa3;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 22px;
+  font-size: 1.3em;
+}
+.card > .img {
+  width: 100%;
+  height: 200px;
+  position: relative;
+  background: #d9d9d9;
+}
+.subtitle {
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  padding: 1em;
+  background: hsl(0deg 0% 0% / 68%);
+  color: white;
+}
+.icon.menu.open > .menu-list {
+  transform: translate(0, 100%);
+}
+body {
+  width: 100vw;
+  direction: rtl;
+  display: flex;
+  flex-flow: column;
+  min-height: 100vh;
+}
+body > main {
+  flex-grow: 2;
+}
+.ce {
+  display: flex;
+  justify-content: center;
+  margin-top: 3em;
+  margin-bottom: 1em;
+}
+body::before {
+  content: "";
+  background-image: url("/assets/images/bg.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+.icon.basket > svg,
+.icon {
+  width: var(--icon-width);
+  height: var(--icon-width);
+}
+.icon.basket {
+  position: relative;
+}
+.badge {
+  content: "2";
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(50%, -50%);
+  background: red;
+  width: calc(var(--icon-width));
+  height: calc(var(--icon-width));
+  border-radius: 100%;
+  text-align: center;
+  line-height: 22px;
+  color: white;
+}
+body > header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(266.48deg, #0075ff 6.48%, rgb(69 254 4) 72.71%);
+  padding: 1em;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+body > header > h1 {
+  color: white;
+}
+body > header > .icon:nth-child(1) > svg {
+  fill: white;
+}
+footer {
+  display: flex;
+  justify-content: space-between;
+  background: var(--bg);
+  margin-top: 2em;
+  padding: 2em;
+}
+footer > ul {
+  display: flex;
+  flex-flow: column;
+  gap: 1em;
+  color: white;
+  padding: 1em;
+}
+li {
+  list-style: none;
+}
+.no {
+  display: none;
+}
