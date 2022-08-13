@@ -33,7 +33,7 @@ html(lang="en")
               span(data-key="price")= price
               |    تومان
         button سفارش
-    - var cardsInfo = require("../../data.json").cards
+    - var cardsInfo = data.cards
     mixin selectCard(value)
       select(data-key="name", value=value)
         - for (var i = 0; i < cardsInfo.length; i++)

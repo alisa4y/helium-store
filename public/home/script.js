@@ -7,7 +7,9 @@ const orders = from([])
 
 function initializeOrdering() {
   const ordersElm = qs("#orders")
+  const basket = qs(".badge")
   observe(orders, () => {
+    basket.eval = { count: orders.length }
     let ordersby = {}
     for (let order of orders) {
       let { name } = order
@@ -28,10 +30,6 @@ function hideBadge(badge) {
   }
 }
 ael(window, "load", async () => {
-  await timeout(0)
-  const badge = document.querySelector(".badge")
-  hideBadge(badge)
-  ObserveElm(() => hideBadge(badge), badge)
   initializeOrdering()
 })
 
@@ -48,6 +46,14 @@ jss({
     ael(order, "click", () => {
       orders.push(elm.eval)
     })
+  },
+  ".badge": async elm => {
+    await timeout(0)
+    hideBadge(elm)
+    ObserveElm(
+      () => (elm.style.display = elm.eval.count == 0 ? "none" : "initial"),
+      elm
+    )
   },
 })
 g_("countCard", ar => ({ count: ar.length }))
