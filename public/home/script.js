@@ -3,32 +3,21 @@ import { jss, ael, onClickAway, ObserveElm, g_, qs } from "jss"
 import { Observable } from "object-observer"
 
 const { from, observe } = Observable
-const orders = from([])
+const orders = from({})
 
 function initializeOrdering() {
   const ordersElm = qs("#orders")
   const basket = qs(".badge")
-  observe(orders, () => {
-    basket.eval = { count: orders.length }
-    let ordersby = {}
-    for (let order of orders) {
-      let { name } = order
-      ordersby[name] ??= []
-      ordersby[name].push(order)
-    }
-    ordersElm.eval = oKeys(ordersby).map(name => ({
+  observe(orders, ({ type, path: [name] }) => {
+    basket.eval = { count: orders.reduce((a, o) => a + o.count, 0) }
+    ordersElm.eval = oKeys(orders).map(name => ({
       name,
-      price: ordersby[name][0].price * ordersby[name].length,
-      count: ordersby[name].length,
+      price: orders[name][0].price * orders[name].length,
+      count: orders[name].length,
     }))
   })
 }
 
-function hideBadge(badge) {
-  if (badge.eval.count == 0) {
-    badge.style.display = "none"
-  }
-}
 ael(window, "load", async () => {
   initializeOrdering()
 })
@@ -54,6 +43,24 @@ jss({
       () => (elm.style.display = elm.eval.count == 0 ? "none" : "initial"),
       elm
     )
+  },
+  "t-order": elm => {
+    const inp = qs("input", elm)
+    ael(inp, "input", () => {
+      let count = parseInt(inp.eval.count)
+      if (isNaN(count)) return
+      let currentCount = orders.filter(
+        order => order.name == elm.eval.name
+      ).length
+      if (count > currentCount) {
+        orders.push(elm.eval)
+      } else if (count < currentCount) {
+        orders.splice(
+          orders.findIndex(order => order.name == elm.eval.name),
+          1
+        )
+      }
+    })
   },
 })
 g_("countCard", ar => ({ count: ar.length }))
