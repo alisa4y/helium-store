@@ -10,10 +10,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "js-bundler": "file:../../web/js-bundler",
     "js-tools": "file:../../web/js-tools",
     "jss": "file:../../web/jss",
     "object-observer": "^5.0.4",
     "pug": "^3.0.2",
+    "ro": "file:../../web/ReactiveObject",
     "server": "file:../../web/server"
   },
   "repository": {

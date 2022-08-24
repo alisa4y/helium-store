@@ -24,15 +24,15 @@ html(lang="en")
         include ../assets/icons/basket.svg
         .badge(data-key="count") 0
       .icon.back: include ../assets/icons/back.svg
-    mixin card(name="کارت", price="1000")
+    mixin card(name, price, url)
       .card
         .img
+          img.bgImg(src=url)
           .subtitle
-            span(data-key="name")= name
             span 
-              span(data-key="price")= price
-              |    تومان
-        button سفارش
+              | کارت 
+              span(data-key="name")= name
+            button سفارش
     - var cardsInfo = data.cards
     mixin selectCard(value)
       select(data-key="name", value=value)
@@ -41,7 +41,7 @@ html(lang="en")
     template#order
       .fl
         .label کارت:
-        +selectCard
+        span.ul(data-key="name")
         .label تعداد:
         input(type="number", value="1", data-key="count")
         .label قیمت:
@@ -49,10 +49,13 @@ html(lang="en")
     main
       .card-list.open
         - for (var i = 0; i < cardsInfo.length; i++)
-          +card(cardsInfo[i].name, cardsInfo[i].price)
-      .layout.open
+          +card(cardsInfo[i].name, cardsInfo[i].price, cardsInfo[i].img)
+      .layout.open#orders-list
         h2 سفارش ها
         div#orders(data-item="order" )
+        div.totalPrice
+          span قیمت کل:
+          span(data-key="totalPrice")
         .ce
           button خرید
       .layout.open

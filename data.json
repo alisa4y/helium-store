@@ -1,23 +1,18 @@
 {
   "cards": [{
-      "name": "a",
-      "price": 1000
+      "name": "رویال",
+      "price": 500000,
+      "img": "/assets/images/500000.png"
     },
     {
-      "name": "b",
-      "price": 2000
+      "name": "ارغوان",
+      "price": 200000,
+      "img": "/assets/images/200000.png"
     },
     {
-      "name": "c",
-      "price": 3000
-    },
-    {
-      "name": "d",
-      "price": 4000
-    },
-    {
-      "name": "e",
-      "price": 5000
+      "name": "زمرد",
+      "price": 100000,
+      "img": "/assets/images/100000.png"
     }
   ]
 }

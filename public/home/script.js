@@ -1,25 +1,18 @@
-import { oKeys, timeout } from "js-tools"
+import { timeout } from "js-tools"
 import { jss, ael, onClickAway, ObserveElm, g_, qs } from "jss"
-import { Observable } from "object-observer"
+import data from "/data.json"
 
-const { from, observe } = Observable
-const orders = from({})
-
-function initializeOrdering() {
-  const ordersElm = qs("#orders")
-  const basket = qs(".badge")
-  observe(orders, ({ type, path: [name] }) => {
-    basket.eval = { count: orders.reduce((a, o) => a + o.count, 0) }
-    ordersElm.eval = oKeys(orders).map(name => ({
-      name,
-      price: orders[name][0].price * orders[name].length,
-      count: orders[name].length,
-    }))
-  })
-}
-
+let orders
 ael(window, "load", async () => {
-  initializeOrdering()
+  await timeout(0)
+  const ordersElm = document.querySelector("#orders")
+  orders = ordersElm.eval
+  const badge = document.querySelector(".badge").eval
+  ObserveElm(
+    () =>
+      (badge.count = orders.reduce((p, o) => p + parseInt(o.count) || 0, 0)),
+    ordersElm
+  )
 })
 
 jss({
@@ -31,14 +24,21 @@ jss({
     onClickAway(elm, () => elm.classList.remove("open"))
   },
   ".card": elm => {
-    const order = elm.querySelector("button")
-    ael(order, "click", () => {
-      orders.push(elm.eval)
+    const orderBtn = elm.querySelector("button")
+    ael(orderBtn, "click", () => {
+      const order = elm.eval
+      const i = orders.findIndex(({ name }) => name === order.name)
+      if (i < 0) {
+        order.count = 1
+        order.price = ({ count }) =>
+          parseInt(count) *
+          data.cards.find(({ name }) => order.name === name).price
+        orders.push(order)
+      } else orders[i].count++
     })
   },
   ".badge": async elm => {
     await timeout(0)
-    hideBadge(elm)
     ObserveElm(
       () => (elm.style.display = elm.eval.count == 0 ? "none" : "initial"),
       elm
@@ -46,21 +46,14 @@ jss({
   },
   "t-order": elm => {
     const inp = qs("input", elm)
+    const elmVal = elm.eval
     ael(inp, "input", () => {
-      let count = parseInt(inp.eval.count)
+      let count = parseInt(elmVal.count)
       if (isNaN(count)) return
-      let currentCount = orders.filter(
-        order => order.name == elm.eval.name
-      ).length
-      if (count > currentCount) {
-        orders.push(elm.eval)
-      } else if (count < currentCount) {
-        orders.splice(
-          orders.findIndex(order => order.name == elm.eval.name),
-          1
-        )
-      }
+      if (count === 0) elm.remove()
+      else orders.find(({ name }) => name === elmVal.name).count = count
     })
   },
+  "orders-list": elm => {},
 })
 g_("countCard", ar => ({ count: ar.length }))
