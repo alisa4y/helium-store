@@ -9,25 +9,27 @@
   box-sizing: border-box;
   transition: all 0.3s ease-in-out;
 }
-.orders-list {
+.orders-history {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   justify-items: stretch;
 }
-.orders-list > .cell {
+.orders-history > .cell {
   text-align: center;
   padding: 0.5em;
 }
-.orders-list > .cell:nth-child(8n + 1),
-.orders-list > .cell:nth-child(8n + 2),
-.orders-list > .cell:nth-child(8n + 3),
-.orders-list > .cell:nth-child(8n + 4) {
+.orders-history > .cell:nth-child(8n + 1),
+.orders-history > .cell:nth-child(8n + 2),
+.orders-history > .cell:nth-child(8n + 3),
+.orders-history > .cell:nth-child(8n + 4),
+.orders-history > .cell:nth-child(8n + 5) {
   background: rgba(255, 255, 255, 0.53);
 }
-.orders-list > .cell:nth-child(8n + 5),
-.orders-list > .cell:nth-child(8n + 6),
-.orders-list > .cell:nth-child(8n + 7),
-.orders-list > .cell:nth-child(8n + 8) {
+.orders-history > .cell:nth-child(8n + 6),
+.orders-history > .cell:nth-child(8n + 7),
+.orders-history > .cell:nth-child(8n + 8),
+.orders-history > .cell:nth-child(8n + 9),
+.orders-history > .cell:nth-child(8n + 10) {
   background: rgba(255, 255, 255, 0.26);
 }
 .phone-info > input {
@@ -39,9 +41,23 @@
   gap: 10px;
   align-items: center;
 }
+.fsb {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  margin: 1em 0;
+}
+.gsb {
+  display: grid;
+  grid-auto-flow: column;
+  align-items: center;
+  justify-content: space-between;
+}
 main > * {
   transform: scale(0);
   height: 0px;
+  position: absolute;
 }
 .layout {
   margin: 1em;
@@ -52,11 +68,16 @@ main > * {
   text-align: center;
 }
 .layout > h2 {
+  padding-bottom: 1.5em;
+}
+.layout > * {
   padding-bottom: 1em;
 }
-main > *.open {
+main > .open {
   transform: scale(1);
   height: initial;
+  visibility: visible;
+  position: relative;
 }
 .ul,
 input[type="number"],
@@ -112,11 +133,20 @@ button {
 }
 button {
   width: 109px;
+  min-width: max-content;
   height: 40px;
   background: #00ffa3;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 22px;
   font-size: 1.3em;
+  padding: 0 10px;
+}
+button.circle {
+  /* width: 1em; */
+  /* height: 1em; */
+  padding: 0.2em 0.4em;
+  width: min-content;
+  height: min-content;
 }
 .card > .img {
   position: relative;
@@ -136,7 +166,7 @@ button {
   position: relative;
   background: hsl(0deg 0% 0% / 30%);
 }
-.icon.menu.open > .menu-list {
+.icon.menu.show > .menu-list {
   transform: translate(0, 100%);
 }
 body {
@@ -189,6 +219,7 @@ body::before {
   text-align: center;
   line-height: 22px;
   color: white;
+  display: none;
 }
 body > header {
   display: flex;

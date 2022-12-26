@@ -20,7 +20,7 @@ html(lang="en")
             li: a(herf="#") سوالات متداول
       h1 فروشگاه هلیوم
       .icon.avatar: include ../assets/icons/avatar.svg
-      .icon.basket(data-view="countCard")
+      .icon.basket
         include ../assets/icons/basket.svg
         .badge(data-key="count") 0
       .icon.back: include ../assets/icons/back.svg
@@ -39,33 +39,46 @@ html(lang="en")
         - for (var i = 0; i < cardsInfo.length; i++)
           option(value=cardsInfo[i].name)= cardsInfo[i].name
     template#order
-      .fl
+      .fsb
         .label کارت:
         span.ul(data-key="name")
-        .label تعداد:
-        input(type="number", value="1", data-key="count")
+        .fl
+          .label تعداد:
+          button.circle +
+          span.ul(type="number", value="1", data-key="count")
+          button.circle -
         .label قیمت:
-        span.ul(data-key="price")= "1000"
+        span.ul(data-key="price" type="number")
     main
       .card-list.open
         - for (var i = 0; i < cardsInfo.length; i++)
           +card(cardsInfo[i].name, cardsInfo[i].price, cardsInfo[i].img)
-      .layout.open#orders-list
+      .layout#orders-list
         h2 سفارش ها
         div#orders(data-item="order" )
         div.totalPrice
           span قیمت کل:
-          span(data-key="totalPrice")
+          span(data-key="totalPrice" type="number")
         .ce
-          button خرید
-      .layout.open
+          button.buy خرید
+      #phone-register.layout
         h2 شماره همراه خود را وارد کنید
         .phone-info.fl
           .label شماره همراه:
-          input(type="number", value="09123456789", data-key="phoneNumber")
+          input.ul(data-key="phoneNumber")
         .ce
           button ثبت
-      .layout.open
+      #user-info.layout
+        h2 اطلاعات کاربر
+        .fl
+          span نام
+          input.ul(data-key="name") 
+        .fl
+          span شماره همراه
+          input.ul(data-key="phoneNumber") 
+        .fl.showOrders
+          button سفارش های انجام شده
+      #code-confirm.layout
         h2 دریافت کد
         .fl
           .label کد:
@@ -76,17 +89,22 @@ html(lang="en")
           input(type="number", name="")
         .ce
           button تایید
-      .layout.open
+      .layout#order-feedback
+        h2 سفارش شما ثبت شد.
+        p شما میتوانید سفارش های خود از منو قسمت سفارش های من سفارش خود را پیگیری کنید
+      .layout#order-history
         h2 سفارش های انجام شده
-        .orders-list
+        .orders-history
           .cell کارت 
           .cell تعداد
           .cell قیمت
           .cell تاریخ
+          .cell وضعیت
           .cell طلایی 
           .cell 2
           .cell 20000000
           .cell 1401/2/7
+          .cell تحویل داده نشده
 
     footer
       ul.links

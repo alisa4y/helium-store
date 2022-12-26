@@ -13,6 +13,7 @@
     "js-bundler": "file:../../web/js-bundler",
     "js-tools": "file:../../web/js-tools",
     "jss": "file:../../web/jss",
+    "neo4j-driver": "^5.0.1",
     "object-observer": "^5.0.4",
     "pug": "^3.0.2",
     "ro": "file:../../web/ReactiveObject",
@@ -21,5 +22,8 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/alisa4y/helium-store.git"
+  },
+  "devDependencies": {
+    "cypress": "^10.9.0"
   }
 }
